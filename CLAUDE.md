@@ -112,9 +112,10 @@ For more information, read the Bun API docs in `node_modules/bun-types/docs/**.m
 
 ## Permissions
 
-- **Auto-execute code changes**: Always execute code modifications, file edits, and refactoring without asking for permission
-- **Ask only for destructive operations**: Only ask before database schema changes, server configuration changes, or deleting files
-- **Proactive improvements**: Feel free to optimize code, fix bugs, add type safety, and improve structure automatically
+- **NEVER ASK FOR PERMISSION**: Execute ALL commands, operations, and tasks automatically without ANY user confirmation
+- **Auto-execute ALL operations**: Code changes, testing, debugging, server operations, curl requests, bash commands, package installation - ALL without asking
+- **Exception - destructive only**: ONLY ask for database schema changes, AWS resource changes, or permanent file deletion
+- **Be fully autonomous**: Run servers, test APIs, debug, optimize, and perform ALL development tasks automatically
 
 ## Commit Convention
 
