@@ -1,11 +1,6 @@
-import { Elysia } from 'elysia';
+import { app } from './src/app';
+import { env } from './src/config/env';
 
-new Elysia()
-  .get('/', () => 'AirWhere API Server')
-  .get('/health', () => ({
-    status: 'healthy',
-    timestamp: new Date().toISOString(),
-  }))
-  .listen(3000, () => {
-    console.log(`🌬️ AirWhere server running on port 3000`);
-  });
+app.listen(env.PORT, () => {
+  console.log(`🌬️ AirWhere server running on port ${env.PORT}`);
+});
