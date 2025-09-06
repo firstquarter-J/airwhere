@@ -48,6 +48,10 @@ async function getNearestStationName(
     json = { raw: text };
   }
 
+  const resultCode = json?.response?.header?.resultCode;
+  if (resultCode && resultCode !== '00') {
+    throw new Error(json?.response?.header?.resultMsg || 'Nearby station API error');
+  }
   if (!res.ok) {
     const message =
       json?.response?.header?.resultMsg ||
@@ -84,6 +88,10 @@ async function getRealtimeByStation(
     json = { raw: text };
   }
 
+  const resultCode = json?.response?.header?.resultCode;
+  if (resultCode && resultCode !== '00') {
+    throw new Error(json?.response?.header?.resultMsg || 'Realtime measure API error');
+  }
   if (!res.ok) {
     const message =
       json?.response?.header?.resultMsg ||
@@ -143,6 +151,10 @@ export async function getAirQualityBySido(
     json = { raw: text };
   }
 
+  const resultCode = json?.response?.header?.resultCode;
+  if (resultCode && resultCode !== '00') {
+    throw new Error(json?.response?.header?.resultMsg || 'Sido realtime API error');
+  }
   if (!res.ok) {
     const message =
       json?.response?.header?.resultMsg ||
