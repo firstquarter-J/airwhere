@@ -7,7 +7,7 @@ import { KOREA_EPSG_5186, KOREA_EPSG_5186_DEF } from '@config/constants';
 proj4.defs(KOREA_EPSG_5186, KOREA_EPSG_5186_DEF);
 
 // Convert WGS84 (lat, lng) to TM coordinates locally (no external API)
-export async function toTMCoord(lat: number, lng: number): Promise<TMCoord> {
+export function toTMCoord(lat: number, lng: number): TMCoord {
   const [x, y] = proj4(proj4.WGS84, KOREA_EPSG_5186, [lng, lat]);
   return { tmX: x, tmY: y } satisfies TMCoord;
 }
