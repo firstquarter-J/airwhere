@@ -14,6 +14,15 @@
     "verbatimModuleSyntax": true,
     "noEmit": true,
 
+    // Path aliases
+    "baseUrl": ".",
+    "paths": {
+      "@types-app/*": ["src/types/*"],
+      "@config/*": ["src/config/*"],
+      "@services/*": ["src/services/*"],
+      "@routes/*": ["src/routes/*"]
+    },
+
     // Best practices
     "strict": true,
     "skipLibCheck": true,

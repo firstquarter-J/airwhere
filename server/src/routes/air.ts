@@ -1,8 +1,8 @@
 import { Elysia, t } from 'elysia';
-import { env } from '../config/env';
-import { reverseGeocode } from '../services/kakao';
-import { toTMCoord } from '../services/geo';
-import { getAirQualityByTM, getAirQualityBySido } from '../services/air';
+import { env } from '@config/env';
+import { reverseGeocode } from '@services/kakao';
+import { toTMCoord } from '@services/geo';
+import { getAirQualityByTM, getAirQualityBySido } from '@services/air';
 
 export const air = new Elysia({ name: 'routes/air' }).post(
   '/air',

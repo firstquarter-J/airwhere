@@ -1,12 +1,16 @@
-export interface AirQualityReading {
-  stationName: string;
-  dataTime: string;
-  pm10: { value: number | null; grade: number | null };
-  pm25: { value: number | null; grade: number | null };
-  khai?: { value: number | null; grade: number | null };
-}
+import {
+  DEFAULT_FETCH_TIMEOUT_MS,
+  DATA_GO_BASE,
+  PATH_NEARBY_STATION,
+  PATH_STATION_REALTIME,
+  PATH_SIDO_REALTIME,
+  AIR_API_VER,
+  DEFAULT_SIDO_NUM_ROWS,
+  DEFAULT_PAGE_NO,
+} from '@config/constants';
+import type { AirQualityReading } from '@types-app/air';
+export type { AirQualityReading } from '@types-app/air';
 
-const DEFAULT_FETCH_TIMEOUT_MS = 8000;
 async function fetchWithTimeout(
   input: Parameters<typeof fetch>[0],
   init?: Parameters<typeof fetch>[1],
@@ -34,7 +38,7 @@ async function getNearestStationName(
     tmY: String(tmY),
   });
 
-  const url = `https://apis.data.go.kr/B552584/MsrstnInfoInqireSvc/getNearbyMsrstnList?${params.toString()}`;
+  const url = `${DATA_GO_BASE}/${PATH_NEARBY_STATION}?${params.toString()}`;
   const res = await fetchWithTimeout(url);
   const text = await res.text();
   let json: any;
@@ -45,7 +49,10 @@ async function getNearestStationName(
   }
 
   if (!res.ok) {
-    const message = json?.response?.header?.resultMsg || res.statusText || 'Nearby station request failed';
+    const message =
+      json?.response?.header?.resultMsg ||
+      res.statusText ||
+      'Nearby station request failed';
     throw new Error(message);
   }
 
@@ -64,10 +71,10 @@ async function getRealtimeByStation(
     returnType: 'json',
     stationName,
     dataTerm: 'DAILY',
-    ver: '1.3',
+    ver: AIR_API_VER,
   });
 
-  const url = `https://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty?${params.toString()}`;
+  const url = `${DATA_GO_BASE}/${PATH_STATION_REALTIME}?${params.toString()}`;
   const res = await fetchWithTimeout(url);
   const text = await res.text();
   let json: any;
@@ -78,7 +85,10 @@ async function getRealtimeByStation(
   }
 
   if (!res.ok) {
-    const message = json?.response?.header?.resultMsg || res.statusText || 'Realtime measure request failed';
+    const message =
+      json?.response?.header?.resultMsg ||
+      res.statusText ||
+      'Realtime measure request failed';
     throw new Error(message);
   }
 
@@ -118,12 +128,12 @@ export async function getAirQualityBySido(
     serviceKey: apiKey,
     returnType: 'json',
     sidoName,
-    numOfRows: '100',
-    pageNo: '1',
-    ver: '1.3',
+    numOfRows: String(DEFAULT_SIDO_NUM_ROWS),
+    pageNo: String(DEFAULT_PAGE_NO),
+    ver: AIR_API_VER,
   });
 
-  const url = `https://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty?${params.toString()}`;
+  const url = `${DATA_GO_BASE}/${PATH_SIDO_REALTIME}?${params.toString()}`;
   const res = await fetchWithTimeout(url);
   const text = await res.text();
   let json: any;
@@ -134,7 +144,10 @@ export async function getAirQualityBySido(
   }
 
   if (!res.ok) {
-    const message = json?.response?.header?.resultMsg || res.statusText || 'Sido realtime request failed';
+    const message =
+      json?.response?.header?.resultMsg ||
+      res.statusText ||
+      'Sido realtime request failed';
     throw new Error(message);
   }
 

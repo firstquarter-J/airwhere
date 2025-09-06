@@ -1,7 +1,7 @@
 import { Elysia } from 'elysia';
-import { env } from './config/env';
-import { location } from './routes/location';
-import { air } from './routes/air';
+import { env } from '@config/env';
+import { location } from '@routes/location';
+import { air } from '@routes/air';
 
 export const app = new Elysia()
   .get('/', () => 'AirWhere API Server')

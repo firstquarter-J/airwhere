@@ -1,8 +1,8 @@
 import { describe, test, expect } from "bun:test";
-import { env } from "../src/config/env";
-import { toTMCoord } from "../src/services/geo";
-import { getAirQualityByTM, getAirQualityBySido, type AirQualityReading } from "../src/services/air";
-import { reverseGeocode } from "../src/services/kakao";
+import { env } from "@config/env";
+import { toTMCoord } from "@services/geo";
+import { getAirQualityByTM, getAirQualityBySido, type AirQualityReading } from "@services/air";
+import { reverseGeocode } from "@services/kakao";
 
 // This is an integration test that calls real external APIs.
 // It will be skipped automatically if required API keys are not configured.
@@ -50,4 +50,3 @@ describe("integration: air quality APIs", () => {
     if (reading) assertReadingShape(reading);
   });
 });
-

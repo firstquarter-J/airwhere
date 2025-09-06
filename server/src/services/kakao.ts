@@ -1,15 +1,13 @@
-export interface KakaoAddress {
-  sido: string;
-  full: string;
-  roadAddress: string;
-}
+import type { KakaoAddress } from '@types-app/kakao';
+export type { KakaoAddress } from '@types-app/kakao';
+import { KAKAO_COORD2ADDR_URL_BASE } from '@config/constants';
 
 export async function reverseGeocode(
   lat: number,
   lng: number,
   apiKey: string
 ): Promise<KakaoAddress | null> {
-  const url = `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${lng}&y=${lat}`;
+  const url = `${KAKAO_COORD2ADDR_URL_BASE}?x=${lng}&y=${lat}`;
   const response = await fetch(url, {
     headers: { Authorization: `KakaoAK ${apiKey}` },
   });
