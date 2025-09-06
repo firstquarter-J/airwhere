@@ -23,7 +23,8 @@ export async function reverseGeocode(
   }
 
   if (!response.ok) {
-    const message = data?.message || response.statusText || 'Kakao request failed';
+    const message =
+      data?.message || response.statusText || 'Kakao request failed';
     throw new Error(message);
   }
 
@@ -40,4 +41,3 @@ export async function reverseGeocode(
     roadAddress: address.road_address?.address_name || '',
   } satisfies KakaoAddress;
 }
-
