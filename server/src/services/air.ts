@@ -6,6 +6,21 @@ export interface AirQualityReading {
   khai?: { value: number | null; grade: number | null };
 }
 
+const DEFAULT_FETCH_TIMEOUT_MS = 8000;
+async function fetchWithTimeout(
+  input: Parameters<typeof fetch>[0],
+  init?: Parameters<typeof fetch>[1],
+  timeoutMs = DEFAULT_FETCH_TIMEOUT_MS
+) {
+  const ac = new AbortController();
+  const t = setTimeout(() => ac.abort(), timeoutMs);
+  try {
+    return await fetch(input, { ...init, signal: ac.signal });
+  } finally {
+    clearTimeout(t);
+  }
+}
+
 // Find nearest measurement station using TM coordinates
 async function getNearestStationName(
   tmX: number,
@@ -20,7 +35,7 @@ async function getNearestStationName(
   });
 
   const url = `https://apis.data.go.kr/B552584/MsrstnInfoInqireSvc/getNearbyMsrstnList?${params.toString()}`;
-  const res = await fetch(url);
+  const res = await fetchWithTimeout(url);
   const text = await res.text();
   let json: any;
   try {
@@ -53,7 +68,7 @@ async function getRealtimeByStation(
   });
 
   const url = `https://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty?${params.toString()}`;
-  const res = await fetch(url);
+  const res = await fetchWithTimeout(url);
   const text = await res.text();
   let json: any;
   try {
@@ -109,7 +124,7 @@ export async function getAirQualityBySido(
   });
 
   const url = `https://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty?${params.toString()}`;
-  const res = await fetch(url);
+  const res = await fetchWithTimeout(url);
   const text = await res.text();
   let json: any;
   try {
