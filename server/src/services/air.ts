@@ -1,5 +1,4 @@
 import {
-  DEFAULT_FETCH_TIMEOUT_MS,
   DATA_GO_BASE,
   PATH_NEARBY_STATION,
   PATH_STATION_REALTIME,
@@ -8,22 +7,9 @@ import {
   DEFAULT_SIDO_NUM_ROWS,
   DEFAULT_PAGE_NO,
 } from '@config/constants';
+import { fetchWithTimeout } from '@utils/http';
 import type { AirQualityReading } from '@types-app/air';
 export type { AirQualityReading } from '@types-app/air';
-
-async function fetchWithTimeout(
-  input: Parameters<typeof fetch>[0],
-  init?: Parameters<typeof fetch>[1],
-  timeoutMs = DEFAULT_FETCH_TIMEOUT_MS
-) {
-  const ac = new AbortController();
-  const t = setTimeout(() => ac.abort(), timeoutMs);
-  try {
-    return await fetch(input, { ...init, signal: ac.signal });
-  } finally {
-    clearTimeout(t);
-  }
-}
 
 // Find nearest measurement station using TM coordinates
 async function getNearestStationName(

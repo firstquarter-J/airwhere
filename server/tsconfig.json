@@ -20,7 +20,8 @@
       "@types-app/*": ["src/types/*"],
       "@config/*": ["src/config/*"],
       "@services/*": ["src/services/*"],
-      "@routes/*": ["src/routes/*"]
+      "@routes/*": ["src/routes/*"],
+      "@utils/*": ["src/utils/*"]
     },
 
     // Best practices
